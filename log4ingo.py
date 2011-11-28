@@ -97,15 +97,25 @@ class BaseObject(object):
 
 
 class LoggingBase(BaseObject):
-    def __init__(self, level=logging.DEBUG, syslog=False):
+    def __init__(self, config=None, level=logging.DEBUG, syslog=False):
+        self.config = config
         self.level = level
         self.syslog = syslog
-        self.basicConfig()
+
+        if self.config is not None:
+            self.fileConfig(self.config)
+        else:
+            self.basicConfig()
 
     def basicConfig(self, *targs, **kwargs):
-        if self.root_logger.handlers:
-            logging.debug('Ignore second call to basicConfig.')
-            return True
+        #if self.root_logger.handlers:
+        #    logging.debug('Ignore second call to basicConfig.')
+        #    return True
+
+        map(
+            lambda x: self.root_logger.removeHandler(x),
+            self.root_logger.handlers
+        )
 
         stdout = logging.StreamHandler(stream=sys.stdout)
         stdout.setLevel(logging.DEBUG)
@@ -140,6 +150,9 @@ class LoggingBase(BaseObject):
         )
         self.logger.info('LoggingBase initialised.')
         return True
+
+    def fileConfig(self, path, *targs, **kwargs):
+        return logging.config.fileConfig(path)
 
     @property
     def root_logger(self):
@@ -215,14 +228,5 @@ class LoggingBase(BaseObject):
                 continue
         return None
 
-class Real(BaseObject):
-    pass
-
 if __name__ == '__main__':
-    a = LoggingBase(syslog=True, level=10)
-    a.a = 0
-    c = Real()
-    a.setLevel(30, '__main__.Real.*')
-    c.a = 55
-    a.setLevel(10, '__main__.Real.*')
-    c.a = 100
+    pass
