@@ -1,0 +1,16 @@
+Source: python-log4ingo
+Section: python
+Priority: extra
+Maintainer: Robin Wittler <real@the-real.org>
+Build-Depends: debhelper (>= 8.0.0), python-support
+Standards-Version: 3.9.2
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: git://git.debian.org/collab-maint/python-log4ingo.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/python-log4ingo.git;a=summary
+
+Package: python-log4ingo
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python
+Description: a log module dedicated to a guy named ingo
+ This is python-log4ingo. It is a realy simple module containing
+ a few classes "pimped" to do logging. Have Fun!
