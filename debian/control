@@ -5,8 +5,8 @@ Maintainer: Robin Wittler <real@the-real.org>
 Build-Depends: debhelper (>= 8.0.0), python-support
 Standards-Version: 3.9.2
 Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://github.com/robin-wittler/log4ingo.git
-#Vcs-Browser: https://github.com/robin-wittler/log4ingo.git
+Vcs-Git: git://github.com/robin-wittler/log4ingo.git
+Vcs-Browser: https://github.com/robin-wittler/log4ingo.git
 
 Package: python-log4ingo
 Architecture: all
