@@ -10,7 +10,7 @@ Homepage: <insert the upstream URL, if relevant>
 
 Package: python-log4ingo
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, python
+Depends: ${python:Depends}, ${misc:Depends}, python
 Description: a log module dedicated to a guy named ingo
  This is python-log4ingo. It is a realy simple module containing
  a few classes "pimped" to do logging. Have Fun!
