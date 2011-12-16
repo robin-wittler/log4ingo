@@ -56,12 +56,39 @@ class BaseObject(object):
         )
 
         attribute = object.__getattribute__(self, name)
+        if callable(attribute):
+            _callable = attribute
+            def _logwrapper(*targs, **kwargs):
+                _logger = logging.getLogger(
+                    '%s.%s.%s'
+                    %(
+                        __name__,
+                        myname,
+                        name
+                    )
+                )
+                _logger.debug(
+                    'Called to exec with targs: %s and kwargs: %s'
+                    %(targs, kwargs)
+                )
+                result = _callable(*targs, **kwargs)
+                _logger.debug(
+                    'return with result: %s', result
+                )
+                return result
 
-        logger.debug(
-            '%s is: %s',
-            name,
-            type(attribute)
-        )
+            logger.debug(
+                'Wrapping callabel %s to add logging',
+                attribute
+            )
+            attribute = _logwrapper
+        else:
+            logger.debug(
+                '%s is: %s',
+                name,
+                type(attribute)
+            )
+
         return attribute
 
     def __setattr__(self, key, value):
@@ -108,10 +135,6 @@ class LoggingBase(BaseObject):
             self.basicConfig()
 
     def basicConfig(self, *targs, **kwargs):
-        #if self.root_logger.handlers:
-        #    logging.debug('Ignore second call to basicConfig.')
-        #    return True
-
         map(
             lambda x: self.root_logger.removeHandler(x),
             self.root_logger.handlers
